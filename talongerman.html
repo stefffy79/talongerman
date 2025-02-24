@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Calculator Data</title>
+        <style>
+                body {
+                        background: white;
+                        background-size: cover;
+                        color: white;
+                        font-family: Arial, sans-serif;
+                }
+
+                .container {
+                        position: fixed;
+                        top: 12.4%;
+                        left: 32.8%;
+                        display: flex;
+                        gap: 0px;
+                }
+
+                input {
+                        position: relative;
+                        font-size: 24px;
+                        font-weight: bold;
+                        width: 60px;
+                        text-align: center;
+                        background: transparent;
+                        border: none;
+                }
+
+                #result {
+                        font-size: 24px;
+                        font-weight: bold;
+                        background: transparent;
+                        color: black;
+                        position: absolute;
+                        right: 13.5%;
+                        bottom: 5.5%;
+                }
+
+                .img {
+                        position: fixed;
+                        width: 100%;
+                        height: 100%;
+                        margin-left: -5px;
+                        margin-right: 10px;
+
+                }
+
+                .zzz {
+                        text-align: right;
+
+                }
+
+                .aa {
+                        text-align: center;
+                }
+        </style>
+</head>
+
+<body>
+        <img class="img" src="https://i.ibb.co/ymmDW1HN/IMG-20250223-085537.jpg" alt="foto" border"0">
+        <div class="container">
+                <input class="zzz" type="number" id="dayOfYear" placeholder="ZZZ" min="1" max="366">
+                <input class="aa" type="number" id="yearDigits" placeholder="AA" min="0" max="99">
+        </div>
+        <div id="result"></div>
+
+        <script>
+                function isLeapYear(year) {
+                        return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+                }
+
+                function getDateFromDay(day, year) {
+                        let daysInMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+                        if (isLeapYear(year)) daysInMonths[1] = 29;
+
+                        let month = 0;
+                        while (day > daysInMonths[month]) {
+                                day -= daysInMonths[month];
+                                month++;
+                        }
+                        return `${String(day).padStart(2, '0')}.${String(month + 1).padStart(2, '0')}`;
+                }
+
+                function updateResult() {
+                        let dayInput = document.getElementById("dayOfYear").value;
+                        let yearInput = document.getElementById("yearDigits").value;
+                        let resultDiv = document.getElementById("result");
+
+                        if (dayInput !== "" && yearInput !== "") {
+                                let dayNumber = parseInt(dayInput, 10);
+                                let year = parseInt(yearInput, 10);
+                                year = year >= 51 ? 1900 + year : 2000 + year;
+                                let date = getDateFromDay(dayNumber, year);
+                                resultDiv.textContent = `${date}.${year}`;
+                        } else {
+                                resultDiv.textContent = "";
+                        }
+                }
+
+                document.getElementById("dayOfYear").addEventListener("input", updateResult);
+                document.getElementById("yearDigits").addEventListener("input", updateResult);
+        </script>
+</body>
+
+</html>
